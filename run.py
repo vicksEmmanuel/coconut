@@ -351,7 +351,7 @@ def main():
                     # copy the table due to a bug in wandb
                     # https://github.com/wandb/wandb/issues/2981
 
-                    wandb_run.log({"data_table": copy(text_table)})
+                    # wandb_run.log({"data_table": copy(text_table)})
 
                 total_train_steps += 1
                 batch = {

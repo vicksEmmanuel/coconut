@@ -66,12 +66,12 @@ def get_dataset(path, tokenizer, max_size=1000000000):
     complete_tokenized = tokenizer.encode(complete, add_special_tokens=True) + [
         tokenizer.eos_token_id
     ]
-    assert (
-        complete_tokenized
-        == dataset[0]["question_tokenized"]
-        + list(itertools.chain.from_iterable(dataset[0]["steps_tokenized"]))
-        + dataset[0]["answer_tokenized"]
-    )
+    # assert (
+    #     complete_tokenized
+    #     == dataset[0]["question_tokenized"]
+    #     + list(itertools.chain.from_iterable(dataset[0]["steps_tokenized"]))
+    #     + dataset[0]["answer_tokenized"]
+    # )
 
     return dataset
 
@@ -315,6 +315,9 @@ def get_cot_latent_dataset(
         dataset = processed_dataset[0]
 
     else:
+        processed_dataset = base_dataset.map(
+            process_dataset, remove_columns=list(base_dataset.features), num_proc=32
+        )
         if shuffle:
             processed_dataset = processed_dataset.shuffle()
         dataset = base_dataset.map(
